@@ -35,8 +35,3 @@ jobs:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           PARALLEL_PAGES: 25
-            
-      - name: Save changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Commit changes
