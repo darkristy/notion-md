@@ -58,6 +58,8 @@ export const run = async (opts: Opts) => {
       const mdBlocks = await n2m.pageToMarkdown(page.id);
       const content = n2m.toMarkdownString(mdBlocks);
 
+      frontmatter.title.toLowerCase();
+
       const file = `---\n${yaml.stringify(frontmatter)}---\n\n${content}\n`;
 
       const newPath = format(opts.contentPath, frontmatter, (val: any) => safeName(val));
