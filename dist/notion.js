@@ -48,7 +48,7 @@ const run = async (opts) => {
         const mdBlocks = await n2m.pageToMarkdown(page.id);
         const content = n2m.toMarkdownString(mdBlocks);
         const file = `---\n${yaml_1.default.stringify(frontmatter)}---\n\n${content}\n`;
-        const newPath = (0, utils_1.format)(opts.contentPath, frontmatter.title, (val) => (0, utils_1.safeName)(val));
+        const newPath = (0, utils_1.format)(opts.contentPath, frontmatter, (val) => (0, utils_1.safeName)(val));
         console.log(newPath);
         // // save markdown to disk
         // await fs.promises.mkdir(path.dirname(opts.contentPath), { recursive: true });
