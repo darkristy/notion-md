@@ -60,13 +60,15 @@ export const run = async (opts: Opts) => {
 
       const file = `---\n${yaml.stringify(frontmatter)}---\n\n${content}\n`;
 
-      opts.contentPath = format(opts.contentPath, frontmatter, (val: any) => safeName(val));
+      const newPath = format(opts.contentPath, frontmatter, (val: any) => safeName(val));
 
-      // save markdown to disk
-      await fs.promises.mkdir(path.dirname(opts.contentPath), { recursive: true });
-      await fs.promises.writeFile(opts.contentPath, file, "utf8");
+      console.log(newPath);
 
-      console.log(`Created '${opts.contentPath}' from "${frontmatter.title}" (${page.id})`);
+      // // save markdown to disk
+      // await fs.promises.mkdir(path.dirname(opts.contentPath), { recursive: true });
+      // await fs.promises.writeFile(opts.contentPath, file, "utf8");
+
+      // console.log(`Created '${opts.contentPath}' from "${frontmatter.title}" (${page.id})`);
     },
     opts.parallelPages
   );
