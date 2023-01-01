@@ -1,0 +1,13 @@
+name: typescript-action
+description: Action to convert notion pages into markdown files
+author: Kahlil Whitfield
+
+inputs:
+  GREETING:
+    description: test greeting
+    default: "Hello World!!"
+
+runs:
+  using: node16 
+  main: dist/index.js
+  
