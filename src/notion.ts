@@ -60,7 +60,7 @@ export const run = async (opts: Opts) => {
 
       const file = `---\n${yaml.stringify(frontmatter)}---\n\n${content}\n`;
 
-      const newPath = format(opts.contentPath, frontmatter, (val: any) => safeName(val));
+      const newPath = format(opts.contentPath, frontmatter.title, (val: any) => safeName(val));
 
       console.log(newPath);
 
