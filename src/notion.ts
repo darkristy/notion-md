@@ -5,7 +5,7 @@ import yaml from "yaml";
 import { Client } from "@notionhq/client";
 import { NotionToMarkdown } from "notion-to-md";
 
-import { parallel } from "./utils";
+import { format, parallel, safeName } from "./utils";
 
 type Opts = {
   notionToken: string;
@@ -29,9 +29,7 @@ const getDatabaseId = (databaseId: string) => {
 };
 
 export const run = async (opts: Opts) => {
-  const { notionToken, databaseId, contentPath, parallelPages } = opts;
-
-  const notion = new Client({ auth: notionToken });
+  const notion = new Client({ auth: opts.notionToken });
   const n2m = new NotionToMarkdown({ notionClient: notion });
 
   console.log("Fetching pages...");
@@ -41,7 +39,7 @@ export const run = async (opts: Opts) => {
     sorts: [{ property: "Created", direction: "descending" }],
   };
 
-  const databaseQuery = { database_id: getDatabaseId(databaseId), ...query } as any;
+  const databaseQuery = { database_id: getDatabaseId(opts.databaseId), ...query } as any;
   const response = await notion.databases.query(databaseQuery);
   const pages = response.results;
 
@@ -62,12 +60,14 @@ export const run = async (opts: Opts) => {
 
       const file = `---\n${yaml.stringify(frontmatter)}---\n\n${content}\n`;
 
-      // save markdown to disk
-      await fs.promises.mkdir(path.dirname(contentPath), { recursive: true });
-      await fs.promises.writeFile(contentPath, file, "utf8");
+      opts.contentPath = format(opts.contentPath, frontmatter, (val: any) => safeName(val));
 
-      console.log(`Created '${contentPath}' from "${frontmatter.title}" (${page.id})`);
+      // save markdown to disk
+      await fs.promises.mkdir(path.dirname(opts.contentPath), { recursive: true });
+      await fs.promises.writeFile(opts.contentPath, file, "utf8");
+
+      console.log(`Created '${opts.contentPath}' from "${frontmatter.title}" (${page.id})`);
     },
-    parallelPages
+    opts.parallelPages
   );
 };
