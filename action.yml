@@ -3,10 +3,19 @@ description: Action to convert notion pages into markdown files
 author: Kahlil Whitfield
 
 inputs:
-  GREETING:
-    description: test greeting
-    default: "Hello World!!"
-
+  NOTION_TOKEN:
+    description: 'Notion API Token secret'
+    required: true
+  DATABASE_ID:
+    description: 'Notion Database URL or ID (example: https://notion.so/00112233445566778899aabbccddeeff)'
+    required: true
+  CONTENT_PATH:
+    description: 'Path template to where to save markdown files (default="posts/{title}/index.md")'
+    required: false
+  PARALLEL_PAGES:
+    description: Fetch this amount of pages in parallel (default=3)'
+    required: false
+      
 runs:
   using: node16 
   main: dist/index.js
