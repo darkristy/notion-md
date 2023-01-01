@@ -29,9 +29,12 @@ export const parallel = (items: any, handler: any, concurrency: any) => {
 };
 
 export const safeName = (name: string) => {
-  return String(name)
-    .replace(/[^a-z\d]/g, "-")
-    .slice(0, 64);
+  return (
+    String(name)
+      // eslint-disable-next-line regexp/no-obscure-range
+      .replace(/[^A-z\d]/g, "-")
+      .slice(0, 64)
+  );
 };
 
 const getDeepVal = (object: any, path: any, defaultValue = undefined) => {
