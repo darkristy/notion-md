@@ -12,6 +12,7 @@ inputs:
   CONTENT_PATH:
     description: 'Path template to where to save markdown files (default="posts/{title}/index.md")'
     required: false
+    default: "_content/posts/{title}.md"
   PARALLEL_PAGES:
     description: Fetch this amount of pages in parallel (default=3)'
     required: false

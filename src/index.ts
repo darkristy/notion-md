@@ -11,7 +11,7 @@ async function main(): Promise<void> {
 
     run({
       notionToken: core.getInput("NOTION_TOKEN", { required: true }),
-      databaseId: core.getInput("NOTION_DATABASE", { required: true }),
+      databaseId: core.getInput("DATABASE_ID", { required: true }),
       contentPath: core.getInput("CONTENT_PATH"),
       parallelPages: Number(core.getInput("PARALLEL_PAGES")),
     });

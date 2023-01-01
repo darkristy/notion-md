@@ -32,8 +32,8 @@ jobs:
       - name: Test Action
         uses: ./
         with:
-          NOTION_SECRET: ${{ secrets.NOTION_SECRET }}
-          NOTION_DATABASE: ${{ secrets.DATABASE_ID }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          DATABASE_ID: ${{ secrets.DATABASE_ID }}
           PARALLEL_PAGES: 25
             
       - name: Save changes
