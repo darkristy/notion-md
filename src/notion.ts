@@ -58,19 +58,17 @@ export const run = async (opts: Opts) => {
       const mdBlocks = await n2m.pageToMarkdown(page.id);
       const content = n2m.toMarkdownString(mdBlocks);
 
-      frontmatter.title.toLowerCase();
-
       const file = `---\n${yaml.stringify(frontmatter)}---\n\n${content}\n`;
 
-      const newPath = format(opts.contentPath, frontmatter, (val: any) => safeName(val));
-
-      console.log(newPath);
+      const contentPath = format(opts.contentPath, { title: frontmatter.title.toLowerCase() }, (val: any) =>
+        safeName(val)
+      );
 
       // // save markdown to disk
-      // await fs.promises.mkdir(path.dirname(opts.contentPath), { recursive: true });
-      // await fs.promises.writeFile(opts.contentPath, file, "utf8");
+      await fs.promises.mkdir(path.dirname(contentPath), { recursive: true });
+      await fs.promises.writeFile(contentPath, file, "utf8");
 
-      // console.log(`Created '${opts.contentPath}' from "${frontmatter.title}" (${page.id})`);
+      console.log(`Created '${contentPath}' from "${frontmatter.title}" (${page.id})`);
     },
     opts.parallelPages
   );
